@@ -69,6 +69,7 @@ public class StudentServlet extends HttpServlet {
         }
         switch (action) {
             case "delete":
+                deleteStudent(request,response);
                 break;
             case "edit":
 //                editStudent(request, response);
