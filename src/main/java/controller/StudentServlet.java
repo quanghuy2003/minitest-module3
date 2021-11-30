@@ -21,10 +21,7 @@ public class StudentServlet extends HttpServlet {
         }
         switch (action) {
             case "edit":
-//                showEdit(request, response);
-                break;
-            case "view":
-//                showView(request, response);
+                showEdit(request, response);
                 break;
             case "delete":
                 showDelete(request, response);
@@ -32,6 +29,16 @@ public class StudentServlet extends HttpServlet {
             default:
                 listStudents(request, response);
         }
+    }
+
+
+    private void showEdit(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        int student = studentService.findId(id);
+        request.setAttribute("student", student);
+
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("student/edit.jsp");
+        requestDispatcher.forward(request, response);
     }
 
     private void listStudents(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -80,5 +87,13 @@ public class StudentServlet extends HttpServlet {
 //        Student newStudent = new Student(id, name, math, phy,chem);
 //
 //    }
+private void deleteStudent(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    int id = Integer.parseInt(request.getParameter("id"));
+    int student = studentService.findId(id);
+    request.setAttribute("student", student);
+    studentService.delete(id);
+    request.setAttribute("abc", "Xoa Thanh Cong");
+    response.sendRedirect("/students");
 
+}
 }
